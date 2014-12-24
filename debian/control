@@ -1,0 +1,16 @@
+Source: whatsapp-pidgin-plugin-addon
+Section: net
+Priority: optional
+Maintainer: David Guillen Fandos <david@davidgf.net>
+DM-Upload-Allowed: yes
+Build-Depends: debhelper (>= 7.0.50), libglib2.0-dev, libpurple-dev, pidgin-whatsapp
+Standards-Version: 3.8.4
+Homepage: https://github.com/davidgfnet/whatsapp-pidgin-plugin
+
+Package: whatsapp-pidgin-plugin-addon
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libpurple0 (>= 2.3.0), pidgin-whatsapp (>= 0.6.0)
+Description: WhatsApp plugin for Pidgin
+ This is a WhatsApp plugin for Pidgin (only) which enables some additional
+ features for the WhatsApp IM protocol such as "read notifications".
+
