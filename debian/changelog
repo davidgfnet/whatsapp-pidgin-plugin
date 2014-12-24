@@ -1,3 +1,9 @@
+whatsapp-pidgin-plugin-addon (0.1-2) trusty; urgency=low
+
+  * Fixing some build dependencies for debian
+
+ -- David Guillen Fandos <david@davidgf.net>  Wed, 24 Dec 2014 18:00:00 +0200
+
 whatsapp-pidgin-plugin-addon (0.1-1) trusty; urgency=low
 
   * First release version
