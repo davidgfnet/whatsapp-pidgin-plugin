@@ -61,7 +61,7 @@ LDFLAGS = -shared $(PIDGIN_LIB_WIN32_DEV)
 
 $(LIBNAME): $(C_OBJS) $(RESOURCES)
 	$(LD) $^ $(LDFLAGS) -o $@ $(LIBS_PURPLE)
-	$(STRIP) -s $@
+	$(STRIP) --strip-debug --discard-locals --strip-unneeded $(LIBNAME)
 
 PLUGIN_DIR_PURPLE:=$(shell mingw32-pkg-config --variable=plugindir purple)
 DATA_ROOT_DIR_PURPLE:=$(shell mingw32-pkg-config --variable=datarootdir purple)
