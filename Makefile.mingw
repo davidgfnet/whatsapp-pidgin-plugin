@@ -29,8 +29,6 @@ PIDGIN_LIB_WIN32_DEV= -L $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/lib/ \
                       -Wl,--dynamicbase -Wl,--nxcompat -lssp
 
 
-
-
 STRIP = strip
 CC = i686-w64-mingw32-gcc
 CXX = i686-w64-mingw32-g++
@@ -62,7 +60,7 @@ LDFLAGS = -shared $(PIDGIN_LIB_WIN32_DEV)
 	$(RES) $< -O coff -o $@
 
 $(LIBNAME): $(C_OBJS) $(RESOURCES)
-	$(LD) $(LDFLAGS) -o $@ $^ $(LIBS_PURPLE)
+	$(LD) $^ $(LDFLAGS) -o $@ $(LIBS_PURPLE)
 	$(STRIP) -s $@
 
 PLUGIN_DIR_PURPLE:=$(shell mingw32-pkg-config --variable=plugindir purple)
