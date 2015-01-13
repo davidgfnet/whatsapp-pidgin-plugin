@@ -13,7 +13,9 @@
  */
 
 #define DEBUG
+#ifndef PURPLE_PLUGINS
 #define PURPLE_PLUGINS
+#endif
 #define PLUGIN_VERSION "0.1"
 
 #include <string.h>

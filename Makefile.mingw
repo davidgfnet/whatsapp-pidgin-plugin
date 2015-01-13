@@ -1,0 +1,93 @@
+LIBNAME = whatsapp-pidgin-plugin.dll
+
+.PHONY: all
+all: $(LIBNAME)
+
+C_SRCS = whatsapp-plugin.c
+
+C_OBJS = $(C_SRCS:.c=.o)
+RESOURCES = whatsapp-plugin.res
+
+PIDGIN_INCLUDE_WIN32_DEV= -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/ \
+                          -I $(PIDGIN_DEV_ROOT)/pidgin/pidgin/ \
+                          -I $(PIDGIN_DEV_ROOT)/pidgin/pidgin/win32/ \
+                          -I $(PIDGIN_DEV_ROOT)/pidgin/libpurple/ \
+                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/gtk-2.0/ \
+                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/glib-2.0/ \
+                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/lib/glib-2.0/include/ \
+                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/lib/gtk-2.0/include/ \
+                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/cairo/ \
+                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/pango-1.0 \
+                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/atk-1.0/
+
+PIDGIN_LIB_WIN32_DEV= -L $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/lib/ \
+                      -L $(PIDGIN_DEV_ROOT)/pidgin/libpurple/ \
+                      -L $(PIDGIN_DEV_ROOT)/pidgin/pidgin/ \
+                      -lgtk-win32-2.0 -lglib-2.0 -lgdk-win32-2.0 -lgobject-2.0 \
+                      -lgmodule-2.0 -lgdk_pixbuf-2.0 -lpango-1.0 -lcairo -lintl -lws2_32 \
+                      -lpurple -lpidgin -Wl,--enable-auto-image-base -Wl,--enable-auto-import \
+                      -Wl,--dynamicbase -Wl,--nxcompat -lssp
+
+
+
+
+STRIP = strip
+CC = i686-w64-mingw32-gcc
+CXX = i686-w64-mingw32-g++
+STRIP = i686-w64-mingw32-strip
+RES = i686-w64-mingw32-windres
+LD = $(CC)
+CFLAGS_PURPLE = $(shell mingw32-pkg-config --cflags purple)
+CFLAGS = \
+    -Wno-unused-parameter \
+    -O2 \
+    -m32 \
+    -Wall \
+    -Wextra \
+    -fPIC \
+    -DPURPLE_PLUGINS \
+    -DPIC \
+    $(CFLAGS_PURPLE) \
+    $(PIDGIN_INCLUDE_WIN32_DEV) \
+    $(EXTRAINCLUDES)
+
+LIBS_PURPLE = $(shell mingw32-pkg-config --libs purple)  -static-libgcc $(EXTRALIBS)
+LDFLAGS = -shared $(PIDGIN_LIB_WIN32_DEV)
+
+%.o: %.c
+	$(CC) -c $(CFLAGS) -o $@ $<
+%.o: %.cc
+	$(CXX) -c $(CFLAGS) -o $@ $<
+%.res: %.rc
+	$(RES) $< -O coff -o $@
+
+$(LIBNAME): $(C_OBJS) $(RESOURCES)
+	$(LD) $(LDFLAGS) -o $@ $^ $(LIBS_PURPLE)
+	$(STRIP) -s $@
+
+PLUGIN_DIR_PURPLE:=$(shell mingw32-pkg-config --variable=plugindir purple)
+DATA_ROOT_DIR_PURPLE:=$(shell mingw32-pkg-config --variable=datarootdir purple)
+
+.PHONY: install
+install: $(LIBNAME)
+	install -D $(LIBNAME) $(PLUGIN_DIR_PURPLE)/$(LIBNAME)
+
+.PHONY: uninstall
+uninstall: $(LIBNAME)
+	rm $(PLUGIN_DIR_PURPLE)/$(LIBNAME)
+
+.PHONY: strip
+strip:	$(LIBNAME)
+	$(STRIP) --strip-debug --discard-locals $(LIBNAME)
+
+.PHONY: debug
+debug: CFLAGS += -g -DDEBUG
+debug: $(LIBNAME)
+
+
+.PHONY: clean
+clean:
+	-rm *.o
+	-rm $(RESOURCES)
+	-rm $(LIBNAME)
+
