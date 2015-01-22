@@ -8,21 +8,21 @@ C_SRCS = whatsapp-plugin.c
 C_OBJS = $(C_SRCS:.c=.o)
 RESOURCES = whatsapp-plugin.res
 
-PIDGIN_INCLUDE_WIN32_DEV= -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/ \
-                          -I $(PIDGIN_DEV_ROOT)/pidgin/pidgin/ \
-                          -I $(PIDGIN_DEV_ROOT)/pidgin/pidgin/win32/ \
-                          -I $(PIDGIN_DEV_ROOT)/pidgin/libpurple/ \
-                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/gtk-2.0/ \
-                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/glib-2.0/ \
-                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/lib/glib-2.0/include/ \
-                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/lib/gtk-2.0/include/ \
-                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/cairo/ \
-                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/pango-1.0 \
-                          -I $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/atk-1.0/
+PIDGIN_INCLUDE_WIN32_DEV= -I "$(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/" \
+                          -I "$(PIDGIN_DEV_ROOT)/pidgin/pidgin/" \
+                          -I "$(PIDGIN_DEV_ROOT)/pidgin/pidgin/win32/" \
+                          -I "$(PIDGIN_DEV_ROOT)/pidgin/libpurple/" \
+                          -I "$(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/gtk-2.0/" \
+                          -I "$(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/glib-2.0/" \
+                          -I "$(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/lib/glib-2.0/include/" \
+                          -I "$(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/lib/gtk-2.0/include/" \
+                          -I "$(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/cairo/" \
+                          -I "$(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/pango-1.0" \
+                          -I "$(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/include/atk-1.0/"
 
-PIDGIN_LIB_WIN32_DEV= -L $(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/lib/ \
-                      -L $(PIDGIN_DEV_ROOT)/pidgin/libpurple/ \
-                      -L $(PIDGIN_DEV_ROOT)/pidgin/pidgin/ \
+PIDGIN_LIB_WIN32_DEV= -L "$(PIDGIN_DEV_ROOT)/win32-dev/gtk_2_0-2.14/lib/" \
+                      -L "$(PIDGIN_DEV_ROOT)/pidgin/libpurple/" \
+                      -L "$(PIDGIN_DEV_ROOT)/pidgin/pidgin/" \
                       -lgtk-win32-2.0 -lglib-2.0 -lgdk-win32-2.0 -lgobject-2.0 \
                       -lgmodule-2.0 -lgdk_pixbuf-2.0 -lpango-1.0 -lcairo -lintl -lws2_32 \
                       -lpurple -lpidgin -Wl,--enable-auto-image-base -Wl,--enable-auto-import \
